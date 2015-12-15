@@ -149,8 +149,7 @@ public class Parser {
 	     SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 	     SAXParser parser = parserFactory.newSAXParser();
 	     ConfigHandler handler = new ConfigHandler();
-         parser.getXMLReader().setFeature(
-	          "http://xml.org/sax/features/validation", true);
+         parser.getXMLReader().setFeature("http://xml.org/sax/features/validation", true);
          parser.parse(new File(uri), handler);
       } catch (IOException e) {
          System.out.println("Error reading URI: " + e.getMessage());

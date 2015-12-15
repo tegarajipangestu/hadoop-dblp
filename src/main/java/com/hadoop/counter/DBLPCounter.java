@@ -25,17 +25,16 @@ public class DBLPCounter {
      */
     public static class PublicationMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-        private final Text publicationType = new Text();
-        private final IntWritable publicationCount = new IntWritable(1);
-
+        private final Text publicationTag = new Text();
+        private final IntWritable ONE = new IntWritable(1);
+        public static final String[] TAGS = new String[]{"<article>", "<inproceedings>", "<phdthesis>", "<masterthesis>"};
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
             String line = value.toString();
-            for (String tag : PUBLICATION_END_TAGS) {
+            for (String tag : TAGS) {
                 if (line.contains(tag)) {
-                    publicationType.set(tag.substring(2, tag.length() - 1));
-                    context.write(publicationType, publicationCount);
+                    publicationTag.set(tag.substring(1, tag.length() - 1));
+                    context.write(publicationTag, ONE);
                 }
             }
         }
@@ -51,8 +50,7 @@ public class DBLPCounter {
         private final IntWritable result = new IntWritable();
 
         @Override
-        public void reduce(Text key, Iterable<IntWritable> values, Context context)
-                throws IOException, InterruptedException {
+        public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
             int sum = 0;
             for (IntWritable val : values) {
@@ -63,9 +61,4 @@ public class DBLPCounter {
             context.write(key, result);
         }
     }
-
-    public static final String JOB_DESCRIPTION = "dblp publication count";
-    public static final String USAGE = "Usage: publicationcount <in> <out>";
-    public static final String[] PUBLICATION_END_TAGS = new String[]{
-            "</article>", "</inproceedings>", "</phdthesis>", "</masterthesis>"};
 }
