@@ -55,24 +55,5 @@ public class DBLPDriver {
         outPath.getFileSystem(conf).delete(outPath, true);
 
         job.waitForCompletion(true);
-        
-        
-
-//        Job job = Job.getInstance(conf, JOB_NAME);
-//        job.setJar("publicationcount.jar");
-//        job.setJarByClass(DBLPCounter.class);
-//
-//        job.setMapperClass(DBLPCounter.PublicationMapper.class);
-////        job.setCombinerClass(DBLPCounter.PublicationReducer.class);
-//        job.setReducerClass(DBLPCounter.PublicationReducer.class);
-//
-//        job.setInputFormatClass(TextInputFormat.class);
-//        TextInputFormat.addInputPath(job, new Path(otherArgs[0]));
-//
-//        job.setOutputKeyClass(Text.class);
-//        job.setOutputValueClass(IntWritable.class);
-//        FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
-//
-//        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
